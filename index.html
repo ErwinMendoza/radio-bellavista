@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio Bellavista</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --cream: #e8e3d8;
+    --accent: #C4973A;
+    --accent2: #e8b84b;
+    --gray: #1c1c1c;
+    --gray2: #2a2a2a;
+    --gray3: #444;
+    --text-muted: #888;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    background: var(--accent);
+    padding: 6px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .ticker span { padding: 0 3rem; }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2.5rem;
+    border-bottom: 1px solid var(--gray2);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .live-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: red;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 85vh;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .hero-left {
+    padding: 5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--gray2);
+  }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 420px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 0.9rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #a67d2e; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--gray3);
+    padding: 0.9rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--white); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .hero-visual {
+    flex: 1;
+    background: var(--gray);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+  .vinyl {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #222 30%, #111 31%, #333 50%, #111 51%, #1a1a1a 100%);
+    border: 2px solid #333;
+    position: relative;
+    animation: spin 8s linear infinite;
+    animation-play-state: paused;
+  }
+  .vinyl.playing { animation-play-state: running; }
+  .vinyl::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .waveform {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 0 1rem;
+  }
+  .wave-bar {
+    flex: 1;
+    background: var(--accent);
+    opacity: 0.3;
+    border-radius: 1px 1px 0 0;
+    animation: wave 1.2s ease-in-out infinite;
+  }
+  .wave-bar:nth-child(odd) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3n) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(4n) { animation-delay: 0.5s; }
+  @keyframes wave {
+    0%, 100% { height: 8px; }
+    50% { height: 40px; }
+  }
+
+  /* PLAYER */
+  .player-bar {
+    background: var(--gray2);
+    border-top: 1px solid var(--gray3);
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .player-btn {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .player-btn:hover { background: #a67d2e; transform: scale(1.05); }
+  .player-btn svg { width: 20px; height: 20px; fill: white; }
+  .player-info { flex: 1; min-width: 0; }
+  .player-now {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+  .player-track {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--white);
+  }
+  .player-show {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .volume-icon { color: var(--text-muted); font-size: 14px; }
+  input[type="range"].volume {
+    width: 80px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  audio { display: none; }
+
+  /* GRID SECTION */
+  .section {
+    padding: 4rem 2.5rem;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .section-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .section-link:hover { text-decoration: underline; }
+
+  /* SHOWS GRID */
+  .shows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--gray2);
+    border: 1px solid var(--gray2);
+  }
+  .show-card {
+    background: var(--black);
+    padding: 2rem;
+    transition: background 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .show-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent);
+    transition: height 0.3s;
+  }
+  .show-card:hover { background: var(--gray); }
+  .show-card:hover::before { height: 100%; }
+  .show-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .show-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+  .show-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .show-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 3px 10px;
+    background: var(--gray2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .show-badge.live {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .about-left {
+    padding: 5rem 2.5rem;
+    border-right: 1px solid var(--gray2);
+  }
+  .about-right {
+    padding: 5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .big-number {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    line-height: 1;
+    color: var(--gray2);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .stat-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 280px;
+    line-height: 1.8;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  /* SOCIAL / FOOTER */
+  footer {
+    padding: 3rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 1px solid var(--gray2);
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray3);
+    letter-spacing: 0.08em;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gray3); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-left { border-right: none; border-bottom: 1px solid var(--gray2); }
+    .stats-row { grid-template-columns: 1fr; gap: 2rem; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .section { padding: 3rem 1.5rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .footer-links { flex-wrap: wrap; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="tickerText">
+    <span>TRANSMITIENDO EN VIVO 24/7 &mdash; RADIO BELLAVISTA &mdash; MÚSICA INDEPENDIENTE &mdash; SANTIAGO, CHILE &mdash;</span>
+    <span>TRANSMITIENDO EN VIVO 24/7 &mdash; RADIO BELLAVISTA &mdash; MÚSICA INDEPENDIENTE &mdash; SANTIAGO, CHILE &mdash;</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RADIO <span>BELLA</span>VISTA</a>
+  <ul class="nav-links">
+    <li><a href="#programacion">Programación</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#escuchar">Escuchar</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-live">
+    <div class="live-dot"></div>
+    Al aire
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">// Radio comunitaria desde Santiago</p>
+    <h1 class="hero-title">
+      MÚSICA<br>QUE<br><em>IMPORTA.</em>
+    </h1>
+    <p class="hero-desc">
+      Radio Bellavista es una radio independiente comprometida con la música que no suena en ningún otro lugar. Transmitimos en vivo desde el corazón de Punta Arenas, las 24 horas del día.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="togglePlay()">Escuchar en vivo</button>
+      <a href="#programacion" class="btn-secondary">Ver programación</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="vinyl" id="vinyl"></div>
+      <div class="waveform" id="waveform"></div>
+    </div>
+    <!-- PLAYER -->
+    <div class="player-bar">
+      <button class="player-btn" id="playBtn" onclick="togglePlay()">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="player-info">
+        <div class="player-now" id="nowLabel">En vivo ahora</div>
+        <div class="player-track" id="trackName">Radio Bellavista — Stream en vivo</div>
+        <div class="player-show" id="showName">Cargando información...</div>
+        <div style="margin-top:8px;height:2px;background:var(--gray3);border-radius:1px;">
+          <div id="progressBar" style="height:100%;width:0%;background:var(--accent);border-radius:1px;transition:width 1s linear;"></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:3px;">
+          <span id="timeRemaining" style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);"></span>
+        </div>
+      </div>
+      <div class="volume-wrap">
+        <span class="volume-icon">&#9834;</span>
+        <input type="range" class="volume" min="0" max="100" value="80" id="volume" oninput="setVolume(this.value)">
+      </div>
+    </div>
+    <audio id="radioPlayer" preload="none">
+    <source src="https://volumes-man-humanities-texas.trycloudflare.com/icecast/main" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
+
+<!-- PROGRAMACIÓN -->
+<section class="section" id="programacion">
+  <div class="section-header">
+    <h2 class="section-title">PROGRAMACIÓN</h2>
+    <a href="#" class="section-link">Ver todo &rarr;</a>
+  </div>
+  <div class="shows-grid">
+    <div class="show-card">
+      <div class="show-time">LUN — VIE / 08:00 — 10:00</div>
+      <div class="show-name">BUENOS DÍAS BELLAVISTA</div>
+      <div class="show-desc">La mejor música para comenzar el día. Rock indie, pop alternativo y las novedades de la semana.</div>
+      <span class="show-badge live">En vivo</span>
+    </div>
+    <div class="show-card">
+      <div class="show-time">DIARIO / 12:00 — 14:00</div>
+      <div class="show-name">MEDIODÍA ALTERNATIVO</div>
+      <div class="show-desc">Dos horas de música alternativa latinoamericana y mundial para acompañar tu almuerzo.</div>
+      <span class="show-badge">Automatizado</span>
+    </div>
+    <div class="show-card">
+      <div class="show-time">VIE — SAB / 22:00 — 00:00</div>
+      <div class="show-name">NOCHE PROFUNDA</div>
+      <div class="show-desc">Electrónica, ambient y música experimental para los espíritus noctámbulos de Santiago.</div>
+      <span class="show-badge">Automatizado</span>
+    </div>
+    <div class="show-card">
+      <div class="show-time">DOM / 11:00 — 13:00</div>
+      <div class="show-name">DOMINGO DE RAÍCES</div>
+      <div class="show-desc">Folclore chileno y latinoamericano. Cueca, nueva canción, trova y música andina.</div>
+      <span class="show-badge">Automatizado</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip" id="nosotros">
+  <div class="about-left">
+    <p class="stat-label">Quiénes somos</p>
+    <h2 class="section-title" style="font-size: 3.5rem; margin-bottom: 1.5rem;">RADIO<br>INDEPENDIENTE</h2>
+    <p style="color: var(--text-muted); line-height: 1.9; font-size: 15px; max-width: 480px;">
+      Radio Bellavista nació de la convicción de que la música merece un espacio sin filtros comerciales. Somos una radio comunitaria, transmitiendo desde Santiago con pasión por lo auténtico y lo independiente.
+    </p>
+    <br>
+    <p style="color: var(--text-muted); line-height: 1.9; font-size: 15px; max-width: 480px;">
+      Utilizamos tecnología de código abierto para llevar nuestra señal a todo el mundo. Cada canción que suena aquí ha sido elegida con criterio, amor y mucho café.
+    </p>
+  </div>
+  <div class="about-right">
+    <div class="stats-row">
+      <div>
+        <div class="big-number">24</div>
+        <div class="stat-label">Horas</div>
+        <div class="stat-desc">Transmisión continua, los 7 días de la semana.</div>
+      </div>
+      <div>
+        <div class="big-number">FM</div>
+        <div class="stat-label">Independiente</div>
+        <div class="stat-desc">Sin publicidad, sin compromisos comerciales.</div>
+      </div>
+      <div>
+        <div class="big-number">+5K</div>
+        <div class="stat-label">Canciones</div>
+        <div class="stat-desc">En nuestra biblioteca musical en constante crecimiento.</div>
+      </div>
+      <div>
+        <div class="big-number">SCL</div>
+        <div class="stat-label">Santiago</div>
+        <div class="stat-desc">Hecho en Chile, para el mundo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contacto">
+  <div class="footer-logo">RADIO <span>BELLA</span>VISTA</div>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Twitter / X</a></li>
+    <li><a href="#">Facebook</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">SCL &mdash; &copy; 2026 Radio Bellavista</div>
+</footer>
+
+<script>
+  /* ══════════════════════════════════════════
+     CONFIGURACIÓN — ajusta solo estas líneas
+     ══════════════════════════════════════════ */   
+
+  const LIBRETIME_HOST = 'https://volumes-man-humanities-texas.trycloudflare.com';
+  const ICECAST_STREAM = 'https://volumes-man-humanities-texas.trycloudflare.com/icecast/main';  
+
+  /*const LIBRETIME_HOST = 'https://radio-bellavista.netlify.app';   // URL base del servidor LibreTime
+  const ICECAST_STREAM = 'https://volumes-man-humanities-texas.trycloudflare.com/main';*/
+  const POLL_MS        = 10000;               // consultar API cada 10 segundos
+
+  /* ── ESTADO ── */
+  let playing       = false;
+  let currentLabel  = '';
+  let progressTimer = null;
+  let trackStart    = null;
+  let trackDuration = null;
+
+  /* ── ELEMENTOS DOM ── */
+  const audio     = document.getElementById('radioPlayer');
+  const vinyl     = document.getElementById('vinyl');
+  const playIcon  = document.getElementById('playIcon');
+  const waveform  = document.getElementById('waveform');
+  const trackName = document.getElementById('trackName');
+  const showName  = document.getElementById('showName');
+  const progBar   = document.getElementById('progressBar');
+  const timeEl    = document.getElementById('timeRemaining');
+  const ticker    = document.getElementById('tickerText');
+
+  /* ── WAVEFORM BARS ── */
+  for (let i = 0; i < 40; i++) {
+    const b = document.createElement('div');
+    b.className = 'wave-bar';
+    b.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+    b.style.animationDelay    = (Math.random() * 0.6) + 's';
+    b.style.height            = (5 + Math.random() * 15) + 'px';
+    waveform.appendChild(b);
+  }
+
+  /* ── REPRODUCTOR ── */
+  function togglePlay() {
+    if (playing) {
+      audio.pause();
+      vinyl.classList.remove('playing');
+      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      document.querySelectorAll('.wave-bar').forEach(b => b.style.animationPlayState = 'paused');
+    } else {
+      audio.src = ICECAST_STREAM + '?t=' + Date.now(); // evita caché
+      audio.load();
+      audio.play().catch(() => {});
+      vinyl.classList.add('playing');
+      playIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+      document.querySelectorAll('.wave-bar').forEach(b => b.style.animationPlayState = 'running');
+    }
+    playing = !playing;
+  }
+
+  function setVolume(v) { audio.volume = v / 100; }
+  audio.volume = 0.8;
+
+  /* ── BARRA DE PROGRESO ── */
+  function updateProgress() {
+    if (!trackStart || !trackDuration) return;
+    const elapsed = (Date.now() - trackStart) / 1000;
+    const pct     = Math.min((elapsed / trackDuration) * 100, 100);
+    if (progBar) progBar.style.width = pct.toFixed(1) + '%';
+    const rem = Math.max(trackDuration - elapsed, 0);
+    if (timeEl) timeEl.textContent = '-' + Math.floor(rem / 60) + ':' + String(Math.floor(rem % 60)).padStart(2, '0');
+  }
+
+  /* ── LIMPIAR nombre de archivo ── */
+  function cleanFilename(raw) {
+    if (!raw) return '';
+    return raw
+      .replace(/^[-\s]+/, '')       // quitar guiones iniciales
+      .replace(/\.\w{2,4}$/, '')    // quitar extensión (.mp3, .ogg, etc.)
+      .replace(/_/g, ' ')           // guiones bajos → espacios
+      .trim();
+  }
+
+  /* ── PARSEAR live-info-v2 ── */
+  function parseLiveInfoV2(data) {
+    /* Intentar current primero, luego previous */
+    const current  = data.tracks?.current  || null;
+    const previous = data.tracks?.previous || null;
+    const track    = current || previous || {};
+    const isCurrent = !!current;
+
+    /* Título: preferir metadata limpia, si no limpiar nombre de archivo */
+    let trackTitle = track.track_title || '';
+    let artistName = track.artist_name || '';
+    const rawName  = track.name || '';
+
+    if (!trackTitle) {
+      /* nombre viene como "- Ay de ti.mp3" o solo "Abedul.mp3" */
+      trackTitle = cleanFilename(rawName) || 'Transmisión en vivo';
+    }
+    if (!artistName && track.metadata) {
+      artistName = track.metadata.artist_name || '';
+    }
+
+    /* Show actual */
+    const show = data.shows?.current || {};
+
+    /* Etiqueta de estado */
+    const nowLabel = isCurrent ? 'En vivo ahora' : (previous ? 'Última canción' : 'En vivo ahora');
+
+    return {
+      track:    trackTitle,
+      artist:   artistName,
+      show:     show.name || 'Radio Bellavista',
+      starts:   track.starts,
+      ends:     track.ends,
+      nowLabel: nowLabel,
+    };
+  }
+
+  /* ── ACTUALIZAR UI ── */
+  function updateUI(info) {
+    const label = info.artist ? info.artist + ' — ' + info.track : info.track;
+    /* Actualizar etiqueta En vivo / Última canción */
+    const nowLabelEl = document.getElementById('nowLabel');
+    if (nowLabelEl) nowLabelEl.textContent = info.nowLabel || 'En vivo ahora';
+
+    /* Solo actualizar si cambió la canción */
+    if (label !== currentLabel) {
+      currentLabel = label;
+
+      /* Fade out → actualizar → fade in */
+      trackName.style.transition = 'opacity 0.3s';
+      showName.style.transition  = 'opacity 0.3s';
+      trackName.style.opacity    = '0';
+      showName.style.opacity     = '0';
+
+      setTimeout(() => {
+        trackName.textContent = label;
+        showName.textContent  = info.show;
+        trackName.style.opacity = '1';
+        showName.style.opacity  = '1';
+      }, 320);
+
+      /* Actualizar ticker */
+      if (ticker) {
+        const t = '▶  ' + label + '  —  Radio Bellavista  —  Al aire  —  ';
+        ticker.innerHTML = t + t;
+      }
+
+      /* Iniciar barra de progreso */
+      if (info.starts && info.ends) {
+        trackStart    = new Date(info.starts.replace(' ', 'T') + '-03:00').getTime();
+        trackDuration = (new Date(info.ends.replace(' ', 'T') + '-03:00').getTime() - trackStart) / 1000;
+        clearInterval(progressTimer);
+        progressTimer = setInterval(updateProgress, 1000);
+        updateProgress();
+      }
+    }
+  }
+
+  /* ── FETCH API ── */
+  async function fetchNowPlaying() {
+    try {
+      const res  = await fetch(LIBRETIME_HOST + '/api/live-info-v2', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      updateUI(parseLiveInfoV2(data));
+    } catch (e) {
+      console.warn('[Radio Bellavista] API error:', e.message);
+      if (!currentLabel) {
+        trackName.textContent = 'Radio Bellavista — En vivo';
+        showName.textContent  = 'Conectando...';
+      }
+    }
+  }
+
+  /* ── INICIAR ── */
+  fetchNowPlaying();
+  setInterval(fetchNowPlaying, POLL_MS);
+</script>
+</body>
+</html>
