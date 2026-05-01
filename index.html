@@ -825,7 +825,7 @@
   /* ── FETCH API ── */
   async function fetchNowPlaying() {
     try {
-      const res  = await fetch(LIBRETIME_HOST + '/api/live-info-v2', { cache: 'no-store' });
+      const res  = await fetch(LIBRETIME_HOST + '/api/live-info-v2', { cache: 'no-store', mode: 'cors', headers: { 'Accept': 'application/json' } });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       updateUI(parseLiveInfoV2(data));
